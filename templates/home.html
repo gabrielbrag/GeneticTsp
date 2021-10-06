@@ -1,0 +1,53 @@
+{% extends "masterpage.html"%}
+
+{% block content %}
+    <div class="col-sm-2">
+        <!-- <form method="POST" action=""> -->
+          
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Parâmetros
+                    </h5>
+                    <div class="form-group">
+                        <label for="gen" class="form-label">Gerações</label>
+                        <input type="text" class="form-control" id="gen" placeholder="Numéro de gerações">
+                    </div>  
+                    <button class="btn btn-primary" onClick="CreateMaps()">Gerar Rota</button>
+                </div>
+            </div>
+        <!-- </form> -->
+    </div>
+    <div class="col-sm-10 h-100" id="divMap">{% include 'map.html' %}</div>
+    <script type="text/javascript">
+        function CreateMaps(){
+            $.ajax('/progress', {
+                type: 'get',
+                data:{
+                    gens:$("#gen").val()
+                },
+                dataType: 'html',
+                success : function(html) {
+                    console.log("sucesso")
+                },
+                error: function() {
+                    alert("Error");
+                }
+            });
+        }
+        
+        socket.on('evento', function(){
+            $.ajax('/map', {
+                type: 'get',
+                dataType: 'html',
+                success : function(html) {
+                    console.log("substituindo mapa")
+                    $("#divMap").html(html)
+                },
+                error: function() {
+                    alert("Error");
+                }
+            });           
+        });
+    </script>
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "masterpage.html"%}
+
+{% block content %}
+    <div id="oe" class="col-sm-10 h-100"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        var socket = io();
+        socket.on('connect', function() {
+            socket.emit('my event', {data: 'I\'m connected!'});
+        });
+
+        socket.on('evento', function(){
+            console.log('EventoOOOOOO')
+        });
+    </script>
+    
+    <!-- <script>
+        setInterval(function() {   //calls click event after a certain time
+            $.ajax('/progress', {
+                type: 'get',
+                dataType: 'html',
+                success : function(html) {
+                    $('#oe').html(html)
+                },
+                error: function() {
+                    alert("Error");
+                }
+            });
+        }, 3000);
+    </script> -->
+{% endblock content %}

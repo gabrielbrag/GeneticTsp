@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e7d3e86201044875820efedd695e15b3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_e7d3e86201044875820efedd695e15b3" ></div>
+        
+</body>
+<script>    
+    
+            var map_e7d3e86201044875820efedd695e15b3 = L.map(
+                "map_e7d3e86201044875820efedd695e15b3",
+                {
+                    center: [-25.4355575, -49.25919930000001],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 11,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_57486606cd5b4b5e8c74899dbbc08797 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+            var marker_e336a071dc2746a89170da32c27de24c = L.marker(
+                [-25.4355575, -49.25919930000001],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+            var div_icon_aa151d758d104234abfef4228ab46e24 = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size: 12pt; color:blue; font-weight: bold\"\u003ePonto Inicial\u003c/div\u003e", "iconAnchor": [0, 0], "iconSize": [200, 36]});
+            marker_e336a071dc2746a89170da32c27de24c.setIcon(div_icon_aa151d758d104234abfef4228ab46e24);
+        
+    
+            var marker_c8d0e21ca911475b9c866391c721b1d7 = L.marker(
+                [-25.4346571, -49.2596456],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_5240244c52084e98baf369d19f659cd9 = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_c8d0e21ca911475b9c866391c721b1d7.setIcon(custom_icon_5240244c52084e98baf369d19f659cd9);
+        
+    
+        var popup_ab783b4054754787aea86e4cd2355e18 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5b2f1e6163614f75ab2ea408f5b7a00d = $(`<div id="html_5b2f1e6163614f75ab2ea408f5b7a00d" style="width: 100.0%; height: 100.0%;"><b>Secretaria Municipal de Saúde</b></div>`)[0];
+            popup_ab783b4054754787aea86e4cd2355e18.setContent(html_5b2f1e6163614f75ab2ea408f5b7a00d);
+        
+
+        marker_c8d0e21ca911475b9c866391c721b1d7.bindPopup(popup_ab783b4054754787aea86e4cd2355e18)
+        ;
+
+        
+    
+    
+            var marker_e505d2b48da64eba8c9d9c3a994ce4cf = L.marker(
+                [-25.5431991, -49.27726490000001],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_764b7d2d75334d53a87d5c5ce5bbd94b = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_e505d2b48da64eba8c9d9c3a994ce4cf.setIcon(custom_icon_764b7d2d75334d53a87d5c5ce5bbd94b);
+        
+    
+        var popup_ecc72f793ebe496b9c0575c950ed3c7b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_35776bca161945dabb27c258b93f8561 = $(`<div id="html_35776bca161945dabb27c258b93f8561" style="width: 100.0%; height: 100.0%;"><b>Salvador Allende</b></div>`)[0];
+            popup_ecc72f793ebe496b9c0575c950ed3c7b.setContent(html_35776bca161945dabb27c258b93f8561);
+        
+
+        marker_e505d2b48da64eba8c9d9c3a994ce4cf.bindPopup(popup_ecc72f793ebe496b9c0575c950ed3c7b)
+        ;
+
+        
+    
+    
+            var marker_2f3d5b9a36e9421d8683d0c4451e8f21 = L.marker(
+                [-25.5268893, -49.2652606],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_b075c7ba7aa94cb283bc32de96b39249 = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_2f3d5b9a36e9421d8683d0c4451e8f21.setIcon(custom_icon_b075c7ba7aa94cb283bc32de96b39249);
+        
+    
+        var popup_7baff22449834c3ab516627e969f07e8 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a64f2d5c707a43f296ce8ce90eafb841 = $(`<div id="html_a64f2d5c707a43f296ce8ce90eafb841" style="width: 100.0%; height: 100.0%;"><b>Parigot de Souza</b></div>`)[0];
+            popup_7baff22449834c3ab516627e969f07e8.setContent(html_a64f2d5c707a43f296ce8ce90eafb841);
+        
+
+        marker_2f3d5b9a36e9421d8683d0c4451e8f21.bindPopup(popup_7baff22449834c3ab516627e969f07e8)
+        ;
+
+        
+    
+    
+            var marker_2288fab8496e4ce796f4b8fc6fb2fd87 = L.marker(
+                [-25.5431991, -49.27726490000001],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_038c52a476964fe2968ab678997bdadf = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_2288fab8496e4ce796f4b8fc6fb2fd87.setIcon(custom_icon_038c52a476964fe2968ab678997bdadf);
+        
+    
+        var popup_e5ad18db18084dafa5fb13b239bfbfcb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_c7e8b9c6d62a438e83f6d266b7dcbf2e = $(`<div id="html_c7e8b9c6d62a438e83f6d266b7dcbf2e" style="width: 100.0%; height: 100.0%;"><b>Vila Diana</b></div>`)[0];
+            popup_e5ad18db18084dafa5fb13b239bfbfcb.setContent(html_c7e8b9c6d62a438e83f6d266b7dcbf2e);
+        
+
+        marker_2288fab8496e4ce796f4b8fc6fb2fd87.bindPopup(popup_e5ad18db18084dafa5fb13b239bfbfcb)
+        ;
+
+        
+    
+    
+            var marker_2cf4e5f559414bd2b416a4e554e552da = L.marker(
+                [-25.5406951, -49.2406298],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_787619e759fa45a89399e4fa29cf574d = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_2cf4e5f559414bd2b416a4e554e552da.setIcon(custom_icon_787619e759fa45a89399e4fa29cf574d);
+        
+    
+        var popup_39b374ba167d41279ddaa56b8a42db14 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_5dd76165e13d463ab53d9760cfad7180 = $(`<div id="html_5dd76165e13d463ab53d9760cfad7180" style="width: 100.0%; height: 100.0%;"><b>Avelino Vieira</b></div>`)[0];
+            popup_39b374ba167d41279ddaa56b8a42db14.setContent(html_5dd76165e13d463ab53d9760cfad7180);
+        
+
+        marker_2cf4e5f559414bd2b416a4e554e552da.bindPopup(popup_39b374ba167d41279ddaa56b8a42db14)
+        ;
+
+        
+    
+    
+            var marker_ff288513729a40c3b48b6f73a292f229 = L.marker(
+                [-25.518608, -49.24270139999999],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_9325b218a7bf43c18648ed8359625191 = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_ff288513729a40c3b48b6f73a292f229.setIcon(custom_icon_9325b218a7bf43c18648ed8359625191);
+        
+    
+        var popup_092c8d74dd55423e9f46766c98e47b37 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f454000faa1c4078ac639c64b1466474 = $(`<div id="html_f454000faa1c4078ac639c64b1466474" style="width: 100.0%; height: 100.0%;"><b>Bairro Alto</b></div>`)[0];
+            popup_092c8d74dd55423e9f46766c98e47b37.setContent(html_f454000faa1c4078ac639c64b1466474);
+        
+
+        marker_ff288513729a40c3b48b6f73a292f229.bindPopup(popup_092c8d74dd55423e9f46766c98e47b37)
+        ;
+
+        
+    
+    
+            var marker_cf3b164d00194c53bbd861cfac900cbb = L.marker(
+                [-25.4615166, -49.2148432],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_2a62f5f0a2164e74ab28913a1b226cbf = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_cf3b164d00194c53bbd861cfac900cbb.setIcon(custom_icon_2a62f5f0a2164e74ab28913a1b226cbf);
+        
+    
+        var popup_a0cd9be1329d4920a16a19ceb209e2ea = L.popup({"maxWidth": "100%"});
+
+        
+            var html_55975ef89cb942669bf594e0cc2f11bc = $(`<div id="html_55975ef89cb942669bf594e0cc2f11bc" style="width: 100.0%; height: 100.0%;"><b>Atuba</b></div>`)[0];
+            popup_a0cd9be1329d4920a16a19ceb209e2ea.setContent(html_55975ef89cb942669bf594e0cc2f11bc);
+        
+
+        marker_cf3b164d00194c53bbd861cfac900cbb.bindPopup(popup_a0cd9be1329d4920a16a19ceb209e2ea)
+        ;
+
+        
+    
+    
+            var marker_bebf3cf80151436c9d5abc77a8ae9809 = L.marker(
+                [-25.4789694, -49.2156023],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_af5cd4ed40514edebabcdd4bb3e30c39 = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_bebf3cf80151436c9d5abc77a8ae9809.setIcon(custom_icon_af5cd4ed40514edebabcdd4bb3e30c39);
+        
+    
+        var popup_c0ec0174b7fd4d3884ed22bc55217cd0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_6b690a5a255b4b11bd8e6e23b50e0d6c = $(`<div id="html_6b690a5a255b4b11bd8e6e23b50e0d6c" style="width: 100.0%; height: 100.0%;"><b>Tarumã</b></div>`)[0];
+            popup_c0ec0174b7fd4d3884ed22bc55217cd0.setContent(html_6b690a5a255b4b11bd8e6e23b50e0d6c);
+        
+
+        marker_bebf3cf80151436c9d5abc77a8ae9809.bindPopup(popup_c0ec0174b7fd4d3884ed22bc55217cd0)
+        ;
+
+        
+    
+    
+            var marker_63da5eab5ac6456884d9b369e96289a6 = L.marker(
+                [-25.4891902, -49.3490597],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_88f6732af472419b868e6dd2aef1c53a = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_63da5eab5ac6456884d9b369e96289a6.setIcon(custom_icon_88f6732af472419b868e6dd2aef1c53a);
+        
+    
+        var popup_59166edc8b8a43b6bb323883f92f4463 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_982ab1174672486589fd81fbff2de3af = $(`<div id="html_982ab1174672486589fd81fbff2de3af" style="width: 100.0%; height: 100.0%;"><b>Abranches</b></div>`)[0];
+            popup_59166edc8b8a43b6bb323883f92f4463.setContent(html_982ab1174672486589fd81fbff2de3af);
+        
+
+        marker_63da5eab5ac6456884d9b369e96289a6.bindPopup(popup_59166edc8b8a43b6bb323883f92f4463)
+        ;
+
+        
+    
+    
+            var marker_fab0fcce28904ef5856dc6dd6f4849c0 = L.marker(
+                [-25.5138176, -49.3230955],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_b60e12f442424d6fa13bca311ae15cab = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_fab0fcce28904ef5856dc6dd6f4849c0.setIcon(custom_icon_b60e12f442424d6fa13bca311ae15cab);
+        
+    
+        var popup_6834b84bb99e497bafc49084fd0989dc = L.popup({"maxWidth": "100%"});
+
+        
+            var html_3d9b534e6ce049439bde0cb8e8cc1542 = $(`<div id="html_3d9b534e6ce049439bde0cb8e8cc1542" style="width: 100.0%; height: 100.0%;"><b>Santa Efigênia</b></div>`)[0];
+            popup_6834b84bb99e497bafc49084fd0989dc.setContent(html_3d9b534e6ce049439bde0cb8e8cc1542);
+        
+
+        marker_fab0fcce28904ef5856dc6dd6f4849c0.bindPopup(popup_6834b84bb99e497bafc49084fd0989dc)
+        ;
+
+        
+    
+    
+            var marker_42b462711c4e474f920730fa3160de78 = L.marker(
+                [-25.4664586, -49.2766382],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_1d4506e25349473595564fd619227341 = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_42b462711c4e474f920730fa3160de78.setIcon(custom_icon_1d4506e25349473595564fd619227341);
+        
+    
+        var popup_db144808426e479aa0e4aca033ca3525 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ba7ae7fe28d4413da501a072a5cc6595 = $(`<div id="html_ba7ae7fe28d4413da501a072a5cc6595" style="width: 100.0%; height: 100.0%;"><b>Camargo</b></div>`)[0];
+            popup_db144808426e479aa0e4aca033ca3525.setContent(html_ba7ae7fe28d4413da501a072a5cc6595);
+        
+
+        marker_42b462711c4e474f920730fa3160de78.bindPopup(popup_db144808426e479aa0e4aca033ca3525)
+        ;
+
+        
+    
+    
+            var marker_678d71cf3bcd4b62b51dc2f944b9a073 = L.marker(
+                [-25.478437, -49.3268025],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_1f819239044f4a12ba3122e126a9c1a8 = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_678d71cf3bcd4b62b51dc2f944b9a073.setIcon(custom_icon_1f819239044f4a12ba3122e126a9c1a8);
+        
+    
+        var popup_f299114c2d0f4b838f53051f103d1896 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_49cd87c692b449ea8760664d24b045bc = $(`<div id="html_49cd87c692b449ea8760664d24b045bc" style="width: 100.0%; height: 100.0%;"><b>Uberaba de cima</b></div>`)[0];
+            popup_f299114c2d0f4b838f53051f103d1896.setContent(html_49cd87c692b449ea8760664d24b045bc);
+        
+
+        marker_678d71cf3bcd4b62b51dc2f944b9a073.bindPopup(popup_f299114c2d0f4b838f53051f103d1896)
+        ;
+
+        
+    
+    
+            var marker_02b6c4ba10e647d19fff5beb0eeb108a = L.marker(
+                [-25.4434614, -49.27132659999999],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_018f8a5671d0478ba157a746eecc8ad6 = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_02b6c4ba10e647d19fff5beb0eeb108a.setIcon(custom_icon_018f8a5671d0478ba157a746eecc8ad6);
+        
+    
+        var popup_5769b165aed64df0a246237c9687fecc = L.popup({"maxWidth": "100%"});
+
+        
+            var html_77584fd33b87482d90ea7249aabab1fb = $(`<div id="html_77584fd33b87482d90ea7249aabab1fb" style="width: 100.0%; height: 100.0%;"><b>Gente Cic</b></div>`)[0];
+            popup_5769b165aed64df0a246237c9687fecc.setContent(html_77584fd33b87482d90ea7249aabab1fb);
+        
+
+        marker_02b6c4ba10e647d19fff5beb0eeb108a.bindPopup(popup_5769b165aed64df0a246237c9687fecc)
+        ;
+
+        
+    
+    
+            var marker_caf308a824bc4bf691ec7fcb57efad2f = L.marker(
+                [-25.4980638, -49.3070421],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_39cd98988c014c0eaf3304bd1515878a = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_caf308a824bc4bf691ec7fcb57efad2f.setIcon(custom_icon_39cd98988c014c0eaf3304bd1515878a);
+        
+    
+        var popup_a0c1641b6b6c417f97d5863b0c8bfacb = L.popup({"maxWidth": "100%"});
+
+        
+            var html_13906a60a58542e6b3932bb03020c0d2 = $(`<div id="html_13906a60a58542e6b3932bb03020c0d2" style="width: 100.0%; height: 100.0%;"><b>Osvaldo Cruz</b></div>`)[0];
+            popup_a0c1641b6b6c417f97d5863b0c8bfacb.setContent(html_13906a60a58542e6b3932bb03020c0d2);
+        
+
+        marker_caf308a824bc4bf691ec7fcb57efad2f.bindPopup(popup_a0c1641b6b6c417f97d5863b0c8bfacb)
+        ;
+
+        
+    
+    
+            var marker_0c68f92e5dc54f7daec8dd7e10db0c8b = L.marker(
+                [-25.4912032, -49.3083954],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_1f9c0b1ad71f41fb9fdcdc09b7bcb105 = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_0c68f92e5dc54f7daec8dd7e10db0c8b.setIcon(custom_icon_1f9c0b1ad71f41fb9fdcdc09b7bcb105);
+        
+    
+        var popup_f48c885f259145238dc60e66fd1b55ce = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9ab6d1dbd1c94d598f14d79715f42ca3 = $(`<div id="html_9ab6d1dbd1c94d598f14d79715f42ca3" style="width: 100.0%; height: 100.0%;"><b>Rua da cidadania</b></div>`)[0];
+            popup_f48c885f259145238dc60e66fd1b55ce.setContent(html_9ab6d1dbd1c94d598f14d79715f42ca3);
+        
+
+        marker_0c68f92e5dc54f7daec8dd7e10db0c8b.bindPopup(popup_f48c885f259145238dc60e66fd1b55ce)
+        ;
+
+        
+    
+    
+            var marker_915f11c688694a6885b4d529a2cacad1 = L.marker(
+                [-25.387846, -49.3339273],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_8be19cd09c1e4acbb3f4c7c24cdb4900 = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_915f11c688694a6885b4d529a2cacad1.setIcon(custom_icon_8be19cd09c1e4acbb3f4c7c24cdb4900);
+        
+    
+        var popup_d1beead0dcc048b9b696cd57ff6ae2be = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9b3711087f584b3fa40b4135f0dc4fee = $(`<div id="html_9b3711087f584b3fa40b4135f0dc4fee" style="width: 100.0%; height: 100.0%;"><b>Santa Quitéria</b></div>`)[0];
+            popup_d1beead0dcc048b9b696cd57ff6ae2be.setContent(html_9b3711087f584b3fa40b4135f0dc4fee);
+        
+
+        marker_915f11c688694a6885b4d529a2cacad1.bindPopup(popup_d1beead0dcc048b9b696cd57ff6ae2be)
+        ;
+
+        
+    
+    
+            var marker_3cff836857d24c21926d205138d416f6 = L.marker(
+                [-25.4287636, -49.3536338],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_916e5a0e5a4f4aa7a061ef7d69fe16d3 = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_3cff836857d24c21926d205138d416f6.setIcon(custom_icon_916e5a0e5a4f4aa7a061ef7d69fe16d3);
+        
+    
+        var popup_7d389ced30574ef6b947c38211b8b529 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d2ce29a5d35f46ae93ebd8202279e1e7 = $(`<div id="html_d2ce29a5d35f46ae93ebd8202279e1e7" style="width: 100.0%; height: 100.0%;"><b>Aurora</b></div>`)[0];
+            popup_7d389ced30574ef6b947c38211b8b529.setContent(html_d2ce29a5d35f46ae93ebd8202279e1e7);
+        
+
+        marker_3cff836857d24c21926d205138d416f6.bindPopup(popup_7d389ced30574ef6b947c38211b8b529)
+        ;
+
+        
+    
+    
+            var marker_4222259c4b39414bbd31b070a233847a = L.marker(
+                [-25.5765707, -49.3330266],
+                {}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+    
+        var custom_icon_09f6a2b15f0442a48e8f1a8362ff39cc = L.icon({"iconSize": [18, 18], "iconUrl": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png"});
+        marker_4222259c4b39414bbd31b070a233847a.setIcon(custom_icon_09f6a2b15f0442a48e8f1a8362ff39cc);
+        
+    
+        var popup_8e281c98629e4559ba1f21682143d96e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_50387ab47e7748ae82401a669f768b66 = $(`<div id="html_50387ab47e7748ae82401a669f768b66" style="width: 100.0%; height: 100.0%;"><b>Pinheiros</b></div>`)[0];
+            popup_8e281c98629e4559ba1f21682143d96e.setContent(html_50387ab47e7748ae82401a669f768b66);
+        
+
+        marker_4222259c4b39414bbd31b070a233847a.bindPopup(popup_8e281c98629e4559ba1f21682143d96e)
+        ;
+
+        
+    
+    
+            var poly_line_08b2eb45d8ea4943b906b566b3745a38 = L.polyline(
+                [[-25.4355575, -49.25919930000001], [-25.4355619, -49.2602529], [-25.4338409, -49.2610704], [-25.4343268, -49.2622714], [-25.4347754, -49.2633892], [-25.4367512, -49.26844639999999], [-25.4381271, -49.2719372], [-25.4388031, -49.273639], [-25.4434614, -49.27132659999999], [-25.4434614, -49.27132659999999], [-25.4541069, -49.2661133], [-25.4621455, -49.2750512], [-25.4642128, -49.2741573], [-25.4664586, -49.2766382], [-25.4664586, -49.2766382], [-25.4662254, -49.2763773], [-25.4643155, -49.2772274], [-25.450873, -49.2623316], [-25.449054, -49.2580466], [-25.4470761, -49.2486264], [-25.4468627, -49.24780450000001], [-25.4459105, -49.2458452], [-25.4439766, -49.2437616], [-25.4477834, -49.230308], [-25.4621002, -49.2188609], [-25.4638937, -49.2176517], [-25.4644856, -49.2191395], [-25.466023, -49.218567], [-25.4652147, -49.21593739999999], [-25.4646427, -49.2140739], [-25.4616265, -49.2151801], [-25.4615166, -49.2148432], [-25.4615166, -49.2148432], [-25.461974, -49.21626819999999], [-25.4649998, -49.2151678], [-25.4652147, -49.21593739999999], [-25.4656625, -49.2174232], [-25.4700798, -49.2157999], [-25.471145, -49.2173992], [-25.4789694, -49.2156023], [-25.4789694, -49.2156023], [-25.4821334, -49.2139649], [-25.4832399, -49.2210379], [-25.4971174, -49.211398], [-25.4997813, -49.21210310000001], [-25.5022366, -49.2112443], [-25.518608, -49.24270139999999], [-25.518608, -49.24270139999999], [-25.5191292, -49.2438836], [-25.5272404, -49.23987810000001], [-25.5317851, -49.2421284], [-25.5323135, -49.2424511], [-25.5406791, -49.24039819999999], [-25.5406951, -49.2406298], [-25.5406951, -49.2406298], [-25.5407469, -49.2417358], [-25.53104, -49.2441811], [-25.5294238, -49.2477599], [-25.5318283, -49.2586261], [-25.5285356, -49.2599235], [-25.5287341, -49.2606042], [-25.5267915, -49.2649558], [-25.5268893, -49.2652606], [-25.5268893, -49.2652606], [-25.5272582, -49.2664051], [-25.5303548, -49.2651204], [-25.5334277, -49.2744592], [-25.5362782, -49.2730782], [-25.5373381, -49.2761526], [-25.5420455, -49.2740605], [-25.5431991, -49.27726490000001], [-25.5431991, -49.27726490000001], [-25.5431991, -49.27726490000001], [-25.5431991, -49.27726490000001], [-25.5449919, -49.2876717], [-25.5464537, -49.2923067], [-25.5393349, -49.31206659999999], [-25.5418624, -49.3125811], [-25.5515297, -49.3313919], [-25.5515452, -49.332551], [-25.551858, -49.3334434], [-25.5550692, -49.3330178], [-25.5643538, -49.3286482], [-25.5692471, -49.3321419], [-25.5764343, -49.3329264], [-25.5765707, -49.3330266], [-25.5765707, -49.3330266], [-25.5768426, -49.3317141], [-25.5685826, -49.3203792], [-25.5674251, -49.3148226], [-25.565213, -49.3151192], [-25.5632136, -49.3084954], [-25.5589289, -49.306727], [-25.5435203, -49.3030081], [-25.5430335, -49.3073118], [-25.5426193, -49.3080349], [-25.5343527, -49.31648149999999], [-25.5287114, -49.3130582], [-25.5191338, -49.3227032], [-25.5160722, -49.3168923], [-25.5140895, -49.3179849], [-25.5151199, -49.3201444], [-25.5150525, -49.3201738], [-25.5138176, -49.3230955], [-25.5138176, -49.3230955], [-25.5116137, -49.32289979999999], [-25.5114653, -49.32344759999999], [-25.4980638, -49.3070421], [-25.4980638, -49.3070421], [-25.498114, -49.3083925], [-25.4973379, -49.3082123], [-25.4972362, -49.3083405], [-25.4912032, -49.3083954], [-25.4912032, -49.3083954], [-25.4926263, -49.3083997], [-25.4926213, -49.3131187], [-25.4781164, -49.3258563], [-25.478437, -49.3268025], [-25.478437, -49.3268025], [-25.4782452, -49.3308318], [-25.4835299, -49.3485393], [-25.4895686, -49.34592929999999], [-25.4890766, -49.3491083], [-25.4891902, -49.3490597], [-25.4891902, -49.3490597], [-25.4890766, -49.3491083], [-25.4895686, -49.34592929999999], [-25.4835299, -49.3485393], [-25.4833087, -49.34759829999999], [-25.480524, -49.3487975], [-25.4374127, -49.36497540000001], [-25.4312599, -49.3588469], [-25.4312962, -49.3566399], [-25.4308821, -49.3531534], [-25.4302921, -49.3534663], [-25.4287636, -49.3536338], [-25.4287636, -49.3536338], [-25.4302921, -49.3534663], [-25.4308408, -49.35660619999999], [-25.4317062, -49.3642012], [-25.3825277, -49.3387179], [-25.3857341, -49.3383842], [-25.3861016, -49.3350939], [-25.3864364, -49.335135], [-25.3881396, -49.3341047], [-25.387846, -49.3339273], [-25.387846, -49.3339273]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_e7d3e86201044875820efedd695e15b3);
+        
+</script>
