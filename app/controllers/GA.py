@@ -115,10 +115,11 @@ def nextGeneration(generation):
   newGeneration = normalizeFitness(newGenes)
   return newGeneration
 
-def train(pathData, numGen):
+def train(pathData, numGen, mutRate):
+  print('Mutation rate' + str(mutRate))
   global idealRoutes
   idealRoutes = pathData["idealRoutes"]
-  generation = startGeneration(pathData["optRoute"].copy(), 100, 0.1)
+  generation = startGeneration(pathData["optRoute"].copy(), 100, mutRate)
   generation = normalizeFitness(generation.copy())
   bestFit = 0
   bestSample = []
@@ -130,8 +131,7 @@ def train(pathData, numGen):
         bestFit = sample["fitness"]
         bestSample = sample
         coords = heuristic.coordsRoute(bestSample["genes"], idealRoutes)
-        print("CriandoMapa")
         m = maps.CreateMap(coords, idealRoutes)
         m.save("map.html") 
-        r.get('http://localhost:5000/updMap')
+        r.post('http://localhost:5000/updMap', data={"valor":"1"})
   return bestSample

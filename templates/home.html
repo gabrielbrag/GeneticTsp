@@ -11,20 +11,34 @@
                     </h5>
                     <div class="form-group">
                         <label for="gen" class="form-label">Gerações</label>
-                        <input type="text" class="form-control" id="gen" placeholder="Numéro de gerações">
+                        <input type="text" class="form-control" id="gen" placeholder="Número de gerações">
+                        <label for="mutation" class="form-label">Mutação</label>
+                        <input type="text" class="form-control" id="mutation" placeholder="Taxa de mutação">
                     </div>  
                     <button class="btn btn-primary" onClick="CreateMaps()">Gerar Rota</button>
                 </div>
             </div>
         <!-- </form> -->
     </div>
-    <div class="col-sm-10 h-100" id="divMap">{% include 'map.html' %}</div>
+    <div class="col-sm-10 h-100" style="z-index:0" id="divMap">{% include 'map.html' %}</div>
+    
+    <div class="card" id="cardResults" style="position: absolute; right:20px;top:5px;z-index: 1;">
+        <div class="card-header">
+            Resultados
+        </div>
+        <ul class="list-group-flush" style="margin-left: 0px;">
+            <li class="list-group-item">Melhor Rota: 50KM, 1250 segundos</li>
+            <li class="list-group-item">Ganhos: 10%</li>
+            <li class="list-group-item">Geração Atual: 57</li>
+        </ul>
+    </div>
     <script type="text/javascript">
         function CreateMaps(){
             $.ajax('/progress', {
                 type: 'get',
                 data:{
-                    gens:$("#gen").val()
+                    gens:$("#gen").val(),
+                    mutation:$('#mutation').val()
                 },
                 dataType: 'html',
                 success : function(html) {
@@ -36,12 +50,25 @@
             });
         }
         
-        socket.on('evento', function(){
+        socket.on('evento', function(data){
+            console.log("data " + data)
             $.ajax('/map', {
                 type: 'get',
                 dataType: 'html',
                 success : function(html) {
-                    console.log("substituindo mapa")
+                    $("#divMap").html(html)
+                },
+                error: function() {
+                    alert("Error");
+                }
+            });           
+        });
+
+        socket.on('evento', function(){
+            $.ajax('/genData', {
+                type: 'get',
+                dataType: 'html',
+                success : function(html) {
                     $("#divMap").html(html)
                 },
                 error: function() {

@@ -1,3 +1,4 @@
+import json
 from forms import CreateRoute
 from flask import Flask, escape, request, render_template
 from flask_socketio import SocketIO
@@ -27,17 +28,21 @@ def map():
 
 @app.route('/progress')
 async def progress():
+    mutRate = int(request.args.get('mutation'))/100
     gens = request.args.get('gens')
     routes = heuristic.routes()
     pathData = heuristic.heuristic(routes)
-    genRoute = GA.train(pathData, int(gens))
+    genRoute = GA.train(pathData, int(gens), mutRate)
     print("GenRoute " + str(genRoute))
     coords = heuristic.coordsRoute(genRoute["genes"], routes)
     m = maps.CreateMap(coords, routes)
     m.save("map.html")    
     return ''
 
-@app.route('/updMap')
+@app.route('/updMap', methods=["POST"])
 def update():
-    socketio.emit('evento')
+    print("REQUEST ==================" + str(request))
+    req_data = json.loads(request.data)
+    socketio.emit('evento', req_data)
     return '1'
+
