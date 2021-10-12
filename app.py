@@ -39,10 +39,19 @@ async def progress():
     m.save("map.html")    
     return ''
 
-@app.route('/updMap', methods=["POST"])
-def update():
-    print("REQUEST ==================" + str(request))
+@app.route('/initRoute', methods=["POST"])
+def initRoute():
     req_data = json.loads(request.data)
-    socketio.emit('evento', req_data)
+    socketio.emit('initRoute', req_data)
     return '1'
 
+@app.route('/updMap', methods=["POST"])
+def update():
+    req_data = json.loads(request.data)
+    socketio.emit('updMap', req_data)
+    return '1'
+
+@app.route('/finish', methods=["POST"])
+def nxtGen():
+    socketio.emit('finish', request.form["endGen"])
+    return '1'

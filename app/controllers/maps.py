@@ -5,15 +5,20 @@ import json
 def CostRoute(request_routes, optRoute):
   current_node = 0
   next_node = optRoute[0]
+  totalDis = 0
+  totalTime = 0
   totalCost = 0
   for next_node in optRoute:
     for path in request_routes:
       if path['orig_node'] == current_node:
         for dest in path['dest']:
           if dest['dest_node'] == next_node:
+            totalDis += dest['edge_dis']
+            totalTime += dest['edge_time']
             totalCost += dest['edge_cost']
             current_node = next_node
-  return totalCost
+  costs = {"totalDis":totalDis, "totalTime":totalTime, "totalCost":totalCost}
+  return costs
 
 def CreateMap(coordsRoute, routesI):
   m = folium.Map(location=[float(coordsRoute[0][0]), float(coordsRoute[0][1])],

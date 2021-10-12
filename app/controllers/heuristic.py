@@ -13,7 +13,7 @@ def routes():
         pathCoords.append(path["end_coords"]) 
         #print(len(pathCoords))
         dest_name = path['dest_name']
-        edge = {'dest_node':path['path_dest'], 'dest_name':dest_name, 'edge_cost': pesoDec, 'route_points':pathCoords}
+        edge = {'dest_node':path['path_dest'], 'dest_name':dest_name, 'edge_dis':path['totalDistance'], 'edge_time':path['travelTime'], 'edge_cost': pesoDec, 'route_points':pathCoords}
         found_node = False
         for routeIndex, routeI in enumerate(routesI): #Passando pela lista de rotas ideais
             if routeI['orig_node'] == current_node: #Se achar um item na lista cujo nó de origem é igual a origem atual, usa ele

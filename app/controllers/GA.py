@@ -1,3 +1,4 @@
+import json
 import random
 import maps
 import heuristic
@@ -41,7 +42,7 @@ def normalizeFitness(genes):
     for gene in genes:
       population = {}
       population['genes'] = gene
-      fitness = 1 / maps.CostRoute(idealRoutes, gene)
+      fitness = 1 / maps.CostRoute(idealRoutes, gene)["totalCost"]
       population['fitness'] = fitness
       genFitness.append(population)
       totalFitness += fitness
@@ -116,22 +117,43 @@ def nextGeneration(generation):
   return newGeneration
 
 def train(pathData, numGen, mutRate):
-  print('Mutation rate' + str(mutRate))
   global idealRoutes
   idealRoutes = pathData["idealRoutes"]
+  print(str(normalizeFitness([pathData["optRoute"].copy()])))
+  initCosts = maps.CostRoute(idealRoutes, pathData["optRoute"].copy())
+  initData={"distance":initCosts["totalDis"], "time":initCosts["totalTime"]}
+  r.post('http://localhost:5000/initRoute', json=json.dumps(initData) )
+
+  initCost = maps.CostRoute(idealRoutes, pathData["optRoute"].copy())["totalCost"]
   generation = startGeneration(pathData["optRoute"].copy(), 100, mutRate)
   generation = normalizeFitness(generation.copy())
-  bestFit = 0
-  bestSample = []
+  print('--- InitalCost ---' + str(initCost))
+  bestFit = normalizeFitness([pathData["optRoute"].copy()])[0]["fitness"]
+  fitChanged = False
+  print(bestFit)
   for a in range(1, numGen):
-    
     generation = nextGeneration(generation.copy())
     for sample in generation:
       if sample["fitness"] > bestFit:
         bestFit = sample["fitness"]
+        fitChanged = True
         bestSample = sample
         coords = heuristic.coordsRoute(bestSample["genes"], idealRoutes)
         m = maps.CreateMap(coords, idealRoutes)
         m.save("map.html") 
-        r.post('http://localhost:5000/updMap', data={"valor":"1"})
+
+        genData = {}
+        genData["currentGen"] = a
+        print("--- NewCost -- " + str(maps.CostRoute(idealRoutes, bestSample["genes"].copy())["totalCost"]))
+        costs = maps.CostRoute(idealRoutes, bestSample["genes"].copy())
+        percentOptRoute = (costs["totalCost"] * 100) / initCost 
+        genData["gain"] = 100 - percentOptRoute
+        genData["distance"] = costs["totalDis"]
+        genData["time"] = costs["totalTime"]
+
+    if fitChanged:
+      r.post('http://localhost:5000/updMap', json=json.dumps(genData))
+      fitChanged = False
+
+  r.post('http://localhost:5000/finish', data={"endGen":numGen})
   return bestSample
