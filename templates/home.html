@@ -1,23 +1,33 @@
 {% extends "masterpage.html"%}
 
 {% block content %}
-    <div class="col-sm-2"> 
-        <div class="card mt-3" style="margin-bottom: 50%;">
+    <div class="col-sm-3"> 
+
+        <div class="card mt-3" style="margin-bottom: 10%;"> 
             <div class="card-body">
                 <h5 class="card-title">
-                    Parâmetros
+                    Endereços
                 </h5>
-                <div class="form-group">
-                    <label for="gen" class="form-label">Gerações</label>
-                    <input type="text" class="form-control" id="gen" placeholder="Número de gerações">
-                    <label for="mutation" class="form-label">Mutação</label>
-                    <input type="text" class="form-control" id="mutation" placeholder="Taxa de mutação">
-                </div>  
-                <button class="btn btn-primary" onClick="CreateMaps()">Gerar Rota</button>
+                <table>
+                    <tr><td>               
+                        <label for="inputInitial">Inicial</label>
+                    </td></tr>
+                    <tr><td>
+                        <input type="text" id="inputInitial">
+                    </td></tr>
+                    <tr><td>
+                        <label for="inputAddress">Adicionar Endereço</label>
+                    </td></tr>
+                    <tr><td>
+                        <input type="text" id="inputAddress">
+                    </td></tr>
+                </table>
+
+                <table id="tableAddress" class="table">
+                    <thead><th>Endereços</th><th></th></thead>
+                    <tbody></tbody>
+                </table>
             </div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <div id="spinner" hidden class="spinner-border text-primary" style="width: 150px; height:150px;" role="status" ></div>
         </div>
         <div class="swal-icon swal-icon--success">
             <span class="swal-icon--success__line swal-icon--success__line--long"></span>
@@ -27,20 +37,42 @@
             <div class="swal-icon--success__hide-corners"></div>
           </div>
     </div>
-    <div class="col-sm-10 h-100" style="z-index:0" id="divMap">{% include 'map.html' %}</div>
-    
+    <div class="col-sm-9 h-100" style="z-index:0" id="divMap">{% include 'map.html' %}</div>
+    <div class="card" style="position: absolute; left:27%;bottom:10%;z-index: 1;"> 
+        <div class="card-body">
+            <h5 class="card-title">
+                Parâmetros
+            </h5>
+            <div class="form-group">
+                <label for="gen" class="form-label">Gerações</label>
+                <input type="text" class="form-control" id="gen" placeholder="Número de gerações">
+                <label for="mutation" class="form-label">Mutação</label>
+                <input type="text" class="form-control" id="mutation" placeholder="Taxa de mutação">
+            </div>  
+            <button class="btn btn-primary" onClick="CreateMaps()">Gerar Rota</button>
+        </div>
+    </div>
     <div hidden class="card" id="cardResults" style="position: absolute; right:20px;top:5px;z-index: 1;">
         <div class="card-header">
             <h5 style="font-weight: bold;">Resultados</h5>
         </div>
-        <ul class="list-group list-group-flush" style="margin-left: 0px;">
+        <ul class="list-group list-group-flush" style="margin-left: 0px;margin-bottom:0px;">
             <li id="listInit" class="list-group-item"></li>
             <li id="listVals" class="list-group-item"></li>
             <li id="listGain" class="list-group-item"></li>
             <li id="listGen" class="list-group-item"></li>
         </ul>
+        <div id="spinner" hidden class="spinner-border text-primary" style="width: 150px; height:150px;margin-left:17%;margin-top:5%;margin-bottom:5%;" role="status" ></div>
     </div>
-    <script type="text/javascript">    
+
+    <script type="text/javascript">   
+        const deleteButton = "<span style='font-size: 1.5em; color: red;''><i class='fa fa-red fa-trash' onClick='deleteRow(this)'></i></span>"
+        
+        function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+        }
 
         function timeString(d) {
             d = Number(d);
@@ -60,16 +92,21 @@
             timer: 3000
         })
 
-        Toast.fire({
-            })   
-
         function CreateMaps(){
             $("#spinner").removeAttr("hidden")
+        
+            var tableData = $('#tableAddress').DataTable().rows().data()
+            endArr = []
+            for (var i = 0; i < tableData.length; i++){
+                endArr.push(tableData[i][0])
+            }
+            console.log(endArr)
             $.ajax('/progress', {
-                type: 'get',
+                type: 'post',
                 data:{
                     gens:$("#gen").val(),
-                    mutation:$('#mutation').val()
+                    mutation:$('#mutation').val(),
+                    points:endArr
                 },
                 dataType: 'html',
                 success : function(html) {
@@ -111,6 +148,63 @@
                     alert("Error");
                 }
             });           
+        });
+
+        $(document).ready( function () {
+            var flaskAddress = {{ arrayAdd|safe }};
+            console.log(flaskAddress)
+
+            address = []
+
+            for (var i = 0; i < flaskAddress.length; i++) {
+                address.push([flaskAddress[i], deleteButton])
+            }
+        
+            $('#tableAddress').DataTable({searching:false, 
+                data:address,
+                info:false, 
+                lengthChange:false,
+                pagingType:"simple",  
+                language: {
+                    'paginate': {
+                        'previous': '<button class="btn btn-outline-primary btn-sm" style="margin-right:1vh">Anterior</button>',
+                        'next': '<button class="btn btn-outline-primary btn-sm">Próximo</button>'
+                    },
+                    'emptyTable':'',
+                    'zeroRecords':''
+                },
+                pageLength:7,
+                columnDefs: [
+                    {
+                    'targets': 0,
+                    'render': function(data, type, full, meta){
+                        if (data.length > 32){
+                            data = data.substr(0, 32) + '...'
+                        }
+                        
+                        return data;
+                    }
+                    }
+                ]});
+        } );
+
+        $('#inputAddress').keypress(function (e) {
+            var key = e.which;
+            if(key == 13 && $("#inputAddress").val() != '') 
+            {   
+                var rowContent = $("#inputAddress").val()
+                var t = $('#tableAddress').DataTable();
+                t.row.add([rowContent, deleteButton]).draw(true)
+                $("#inputAddress").val("")
+            }
+        });
+
+        $("#tableAddress").on('click', '.fa-trash', function () {
+            table = $('#tableAddress').DataTable();
+            table
+                .row( $(this).parents('tr') )
+                .remove()
+                .draw();
         });
     </script>
 {% endblock content %}

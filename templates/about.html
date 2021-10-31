@@ -1,33 +1,68 @@
 {% extends "masterpage.html"%}
 
 {% block content %}
-    <div id="oe" class="col-sm-10 h-100"></div>
+    <input type="text" id="testInput">
+    <span style="font-size: 2em; color: red;"><i class='fa fa-red fa-trash'></i></span>
+    <table id="exampleTb">
+        <thead>
+            <th>head</th>
+            <th>head</th>
+        </thead>
+        <tbody>
+       
+        </tbody>
+    </table>
+
+    <button onclick="getData()">Get data</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf-8">
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'bottom-start',
-            showConfirmButton: false,
-            timer: 3000,
-            customClass: {
-                title:"h4"
+        $(document).ready( function () {
+            $('#exampleTb').DataTable({searching:false, info:false, lengthChange:false});
+        } );
+
+        $('#testInput').keypress(function (e) {
+            var key = e.which;
+            if(key == 13)  // the enter key code
+            {   
+                var rowContent = $("#testInput").val()
+                var t = $('#exampleTb').DataTable();
+                t.row.add([rowContent, "<span style='font-size: 1.5em; color: red;''><i class='fa fa-red fa-trash' onClick='deleteRow(this)'></i></span>"]).draw(true)
+                // $("#exampleTb > tbody").append("<tr>" +
+                //                                     "<td id='item" + rowContent + "'>" + rowContent + "</td>" +
+                //                                     "<td><span style='font-size: 1.5em; color: red;''><i class='fa fa-red fa-trash' onClick='deleteRow(this)'></i></span></td>" +
+                //                                 "</tr>");
+                $("#testInput").val("")
             }
-        })
+        });
 
-        Toast.fire({
-                icon: 'success',
-                title: 'Geração de rota finalizada'
-            })  
+        $("#exampleTb").on('click', '.fa-trash', function () {
+            table = $('#exampleTb').DataTable();
+            table
+                .row( $(this).parents('tr') )
+                .remove()
+                .draw();
+        });
+
+        // function deleteRow(element){
+        //     console.log("function");
+        //     $(element).closest("tr").remove();
+        // };
+
+        function getData(){
+            var myTable = $("#exampleTb").DataTable();
+
+            var data  = myTable.rows().data();
+            // var data = Array();
+
+            // $("#exampleTb tr").each(function(i, v){
+            //     data[i] = $(this).children('td').first().text();
+            // }); 
+
+            alert(JSON.stringify(data));
         
-        var socket = io();
-        socket.on('connect', function() {
-            socket.emit('my event', {data: 'I\'m connected!'});
-        });
-
-        socket.on('evento', function(){
-            console.log('EventoOOOOOO')
-        });
+        }
+        
     </script>
     
     <!-- <script>

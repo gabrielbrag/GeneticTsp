@@ -8,6 +8,7 @@ sys.path.insert(1, "C:/Users/Gabriel/Documents/Programação/TCC/FlaskWebpage/ap
 import heuristic
 import maps
 import GA
+import files
 
 app = Flask(__name__)
 app.config['TESTING'] = True
@@ -16,7 +17,9 @@ socketio = SocketIO(app)
 
 @app.route('/', methods=["GET", "POST"])
 def hello():
-    return render_template('home.html', title="blog")
+    file = request.args.get('file')
+    arrayAdd = files.getAddressFile(file)
+    return render_template('home.html', title="IA Genética", arrayAdd=arrayAdd)
 
 @app.route('/about')
 def about():
@@ -26,10 +29,13 @@ def about():
 def map():
     return render_template('map.html', title="about")
 
-@app.route('/progress')
+@app.route('/progress', methods=["POST"])
 async def progress():
-    mutRate = int(request.args.get('mutation'))/100
-    gens = request.args.get('gens')
+    mutRate = int(request.form['mutation'])/100
+    gens = request.form['gens']
+    points = []
+    points = request.form.getlist('points[]')
+    print(str(points))
     routes = heuristic.routes()
     pathData = heuristic.heuristic(routes)
     genRoute = GA.train(pathData, int(gens), mutRate)
