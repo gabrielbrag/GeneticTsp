@@ -29,15 +29,8 @@
                 </table>
             </div>
         </div>
-        <div class="swal-icon swal-icon--success">
-            <span class="swal-icon--success__line swal-icon--success__line--long"></span>
-            <span class="swal-icon--success__line swal-icon--success__line--tip"></span>
-        
-            <div class="swal-icon--success__ring"></div>
-            <div class="swal-icon--success__hide-corners"></div>
-          </div>
     </div>
-    <div class="col-sm-9 h-100" style="z-index:0" id="divMap">{% include 'map.html' %}</div>
+    <iframe id="frameMap" class="col-sm-9" style="z-index:0" src="map" height="600"></iframe>
     <div class="card" style="position: absolute; left:27%;bottom:10%;z-index: 1;"> 
         <div class="card-body">
             <h5 class="card-title">
@@ -52,27 +45,27 @@
             <button class="btn btn-primary" onClick="CreateMaps()">Gerar Rota</button>
         </div>
     </div>
-    <div hidden class="card" id="cardResults" style="position: absolute; right:20px;top:5px;z-index: 1;">
+    <div hidden class="card" id="cardResults" style="position: absolute; right:20px;top:5px;z-index: 1;min-width:220px">
         <div class="card-header">
             <h5 style="font-weight: bold;">Resultados</h5>
         </div>
         <ul class="list-group list-group-flush" style="margin-left: 0px;margin-bottom:0px;">
-            <li id="listInit" class="list-group-item"></li>
-            <li id="listVals" class="list-group-item"></li>
-            <li id="listGain" class="list-group-item"></li>
-            <li id="listGen" class="list-group-item"></li>
+            <li id="listInit" class="list-group-item"><h5 style='font-weight:bold;'>Rota Inicial</h5></li>
+            <li id="listVals" class="list-group-item"><h5 style='font-weight:bold;'>Melhor Rota</h5></li>
+            <li id="listGain" class="list-group-item"><h5 style='font-weight:bold;'>Ganhos</h5></li>
+            <li id="listGen" class="list-group-item"><h5 style='font-weight:bold;'>Geração Atual</h5></li>
         </ul>
         <div id="spinner" hidden class="spinner-border text-primary" style="width: 150px; height:150px;margin-left:17%;margin-top:5%;margin-bottom:5%;" role="status" ></div>
     </div>
 
     <script type="text/javascript">   
-        const deleteButton = "<span style='font-size: 1.5em; color: red;''><i class='fa fa-red fa-trash' onClick='deleteRow(this)'></i></span>"
-        
-        function decodeHtml(html) {
-            var txt = document.createElement("textarea");
-            txt.innerHTML = html;
-            return txt.value;
-        }
+        const deleteButton  = "<span style='font-size: 1.5em; color: red;''><i class='fa fa-red fa-trash' onClick='deleteRow(this)'></i></span>"
+        const defListVals   = "<h5 style='font-weight:bold;'>Melhor Rota</h5>"
+        const defListGain   = "<h5 style='font-weight:bold;'>Ganhos</h5>"
+        const defListGen    = "<h5 style='font-weight:bold;'>Geração Atual</h5>"
+        const defListInit   = "<h5 style='font-weight:bold;'>Rota Inicial</h5>"
+
+        var tableData
 
         function timeString(d) {
             d = Number(d);
@@ -94,13 +87,23 @@
 
         function CreateMaps(){
             $("#spinner").removeAttr("hidden")
-        
-            var tableData = $('#tableAddress').DataTable().rows().data()
-            endArr = []
+            $("#cardResults").removeAttr('hidden')
+            $('#frameMap').attr("src", "");
+
+            $("#listInit").html(defListInit)      
+            $("#listVals").html(defListVals)
+            $("#listGain").html(defListGain);
+            $("#listGen").html(defListGen);
+
+            tableData = $('#tableAddress').DataTable().rows().data()
+            initArr = [$('#inputInitial').val()]
+            tableArr = []
             for (var i = 0; i < tableData.length; i++){
-                endArr.push(tableData[i][0])
+                tableArr.push(tableData[i][0])
             }
-            console.log(endArr)
+            endArr = []
+            endArr = initArr.concat(tableArr)
+
             $.ajax('/progress', {
                 type: 'post',
                 data:{
@@ -108,25 +111,20 @@
                     mutation:$('#mutation').val(),
                     points:endArr
                 },
-                dataType: 'html',
-                success : function(html) {
-                    console.log("sucesso")
-                },
-                error: function() {
-                    alert("Error");
-                }
+                dataType: 'html'
             });
         }
 
         socket.on('initRoute', function(data){
             initData = JSON.parse(data)
-            $("#listInit").html("<h5 style='font-weight:bold;'>Rota Inicial</h5>" + (initData.distance / 1000) + " KM, " + timeString(initData.time))
-            //$("#listGen").html("Geração Atual " + data);          
+            $("#listInit").html(defListInit + (initData.distance / 1000) + " KM, " + timeString(initData.time))      
         });
             
         socket.on('finish', function(data){
             $("#spinner").attr("hidden", true)
-            $("#listGen").html("<h5 style='font-weight:bold;'>Geração Atual</h5>" + data);    
+            $("#listGen").html(defListGen + data);    
+            $('#frameMap').attr("src", "map");
+
             Toast.fire({
                 html: '<span style="font-size:18px;">Geração de rota finalizada</span>'
             })      
@@ -135,33 +133,18 @@
         socket.on('updMap', function(data){
             genData = JSON.parse(data) 
             $("#cardResults").removeAttr('hidden');
-            $("#listVals").html("<h5 style='font-weight:bold;'>Melhor Rota</h5>" + (genData.distance / 1000) + " KM, " + timeString(genData.time))
-            $("#listGain").html("<h5 style='font-weight:bold;'>Ganhos</h5>" + genData.gain.toFixed(2) + "%");
-            $("#listGen").html("<h5 style='font-weight:bold;'>Geração Atual</h5>" + genData.currentGen);
-            $.ajax('/map', {
-                type: 'get',
-                dataType: 'html',
-                success : function(html) {
-                    $("#divMap").html(html)
-                },
-                error: function() {
-                    alert("Error");
-                }
-            });           
+            if (genData.currentGen){
+                $("#listVals").html(defListVals + (genData.distance / 1000) + " KM, " + timeString(genData.time))
+                $("#listGain").html(defListGain + 'Distância: ' + genData.disGain.toFixed(2) + '%, Tempo: ' + genData.timeGain.toFixed(2) + '%');
+                $("#listGen").html(defListGen + genData.currentGen);
+            }
+
+            $('#frameMap').attr("src", "map");
         });
 
-        $(document).ready( function () {
-            var flaskAddress = {{ arrayAdd|safe }};
-            console.log(flaskAddress)
-
-            address = []
-
-            for (var i = 0; i < flaskAddress.length; i++) {
-                address.push([flaskAddress[i], deleteButton])
-            }
-        
+        function createTable(){
             $('#tableAddress').DataTable({searching:false, 
-                data:address,
+                data:tableData,
                 info:false, 
                 lengthChange:false,
                 pagingType:"simple",  
@@ -186,7 +169,7 @@
                     }
                     }
                 ]});
-        } );
+        }
 
         $('#inputAddress').keypress(function (e) {
             var key = e.which;
@@ -206,5 +189,17 @@
                 .remove()
                 .draw();
         });
+
+        $(document).ready( function () {
+            var flaskAddress = {{ arrayAdd|safe }};
+
+            tableData = []
+
+            for (var i = 0; i < flaskAddress.length; i++) {
+                tableData.push([flaskAddress[i], deleteButton])
+            }
+            
+            createTable()
+        } );
     </script>
 {% endblock content %}

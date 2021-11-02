@@ -1,6 +1,8 @@
 import folium
 from folium.features import DivIcon
 import json
+import requests
+import os
 
 def CostRoute(request_routes, optRoute):
   current_node = 0
@@ -41,3 +43,31 @@ def CreateMap(coordsRoute, routesI):
 
   m.save("C:/Users/Gabriel/Documents/Programação/TCC/FlaskWebpage/templates/map.html")
   return m
+
+def gMapsRoutes(edges):
+  request_routes = []
+  for index1, end1 in enumerate(edges):
+    if index1 != (len(edges)):
+      for index2, end2 in enumerate(edges):
+        routes_list = []
+        if end1 != end2:
+          req_str = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + end1 + '&destination=' + end2 + '&key=' + os.getenv("GMAPS_KEY")
+          r = requests.get(req_str)
+          #print(req_str)
+          jsonDict = json.loads(r.text)
+          jsonDict["routes"][0]["legs"]
+          routes_dict = {}
+          travelTime = jsonDict["routes"][0]["legs"][0]["duration"]["value"]
+          totalDistance = jsonDict["routes"][0]["legs"][0]["distance"]["value"]
+          origCoords = jsonDict["routes"][0]["legs"][0]["start_location"]
+          endCoords = jsonDict["routes"][0]["legs"][0]["end_location"]
+          points = []
+          for step in jsonDict["routes"][0]["legs"][0]["steps"]:
+            points.append(step["end_location"])
+          path_orig = index1
+          path_dest = index2
+          path_dict = {'origin_name':end1, 'path_orig':index1, 'orig_coords':origCoords, 'end_coords':endCoords, 'dest_name':end2, 'path_dest':index2, 'travelTime':travelTime, 'totalDistance':totalDistance, 'points':points}
+          request_routes.append(path_dict)
+  with open((os.getenv('ROOT_DIR') + '\\' + 'BackupRequest.json'), 'w') as outfile:
+    json.dump(request_routes, outfile)
+  return request_routes

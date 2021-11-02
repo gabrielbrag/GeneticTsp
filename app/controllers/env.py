@@ -1,2 +1,0 @@
-
-const = {"ROOT_DIR":""}

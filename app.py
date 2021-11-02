@@ -2,9 +2,14 @@ import json
 from forms import CreateRoute
 from flask import Flask, escape, request, render_template
 from flask_socketio import SocketIO
-import folium
+
+from dotenv import load_dotenv
+load_dotenv()
+
 import sys
-sys.path.insert(1, "C:/Users/Gabriel/Documents/Programação/TCC/FlaskWebpage/app/controllers")
+import os
+sys.path.insert(1, os.getenv('CONTROLLERS_FOLDER'))
+
 import heuristic
 import maps
 import GA
@@ -30,18 +35,21 @@ def map():
     return render_template('map.html', title="about")
 
 @app.route('/progress', methods=["POST"])
-async def progress():
+def progress():
     mutRate = int(request.form['mutation'])/100
     gens = request.form['gens']
-    points = []
     points = request.form.getlist('points[]')
-    print(str(points))
-    routes = heuristic.routes()
+    #request_routes = maps.gMapsRoutes(points) #Chama a API Gmaps
+    #print(points)
+    request_routes = {}
+    routes = heuristic.routes() #Organiza os resultados
     pathData = heuristic.heuristic(routes)
+    print('Params ' + '/' + str(gens) + '/' + str(mutRate))
     genRoute = GA.train(pathData, int(gens), mutRate)
     print("GenRoute " + str(genRoute))
     coords = heuristic.coordsRoute(genRoute["genes"], routes)
     m = maps.CreateMap(coords, routes)
+    print('Type ' + str(type(m)))
     m.save("map.html")    
     return ''
 

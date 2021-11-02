@@ -124,13 +124,21 @@ def train(pathData, numGen, mutRate):
   initData={"distance":initCosts["totalDis"], "time":initCosts["totalTime"]}
   r.post('http://localhost:5000/initRoute', json=json.dumps(initData) )
 
-  initCost = maps.CostRoute(idealRoutes, pathData["optRoute"].copy())["totalCost"]
+  costs = maps.CostRoute(idealRoutes, pathData["optRoute"].copy())
+  initTime = costs["totalTime"]
+  initDis = costs["totalDis"]
+  #print('Init ' + str(initCost))
   generation = startGeneration(pathData["optRoute"].copy(), 100, mutRate)
   generation = normalizeFitness(generation.copy())
-  print('--- InitalCost ---' + str(initCost))
-  bestFit = normalizeFitness([pathData["optRoute"].copy()])[0]["fitness"]
+  bestSample = normalizeFitness([pathData["optRoute"].copy()])[0]
+  bestFit = bestSample["fitness"]
   fitChanged = False
-  print(bestFit)
+
+  coords = heuristic.coordsRoute(bestSample["genes"], idealRoutes)
+  m = maps.CreateMap(coords, idealRoutes)
+  m.save("map.html") 
+  r.post('http://localhost:5000/updMap', json=json.dumps(''))
+
   for a in range(1, numGen):
     generation = nextGeneration(generation.copy())
     for sample in generation:
@@ -144,10 +152,12 @@ def train(pathData, numGen, mutRate):
 
         genData = {}
         genData["currentGen"] = a
-        print("--- NewCost -- " + str(maps.CostRoute(idealRoutes, bestSample["genes"].copy())["totalCost"]))
         costs = maps.CostRoute(idealRoutes, bestSample["genes"].copy())
-        percentOptRoute = (costs["totalCost"] * 100) / initCost 
-        genData["gain"] = 100 - percentOptRoute
+        print('NewCost totalTime ' + str(costs["totalTime"]) + '/TotalDis ' + str(costs["totalDis"]))
+        percentTime = (costs["totalTime"] * 100) / initTime
+        percentDis = (costs["totalDis"] * 100) / initDis 
+        genData["timeGain"] = 100 - percentTime
+        genData["disGain"] = 100 - percentDis
         genData["distance"] = costs["totalDis"]
         genData["time"] = costs["totalTime"]
 

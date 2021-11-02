@@ -1,7 +1,7 @@
 import json
 
 def routes():
-    with open('C:/Users/Gabriel/Documents/Programação/TCC/FlaskWebpage/app/controllers/RotaSaude.json') as json_file:
+    with open('C:/Users/Gabriel/Documents/Programação/TCC/FlaskWebpage/BackupRequest.json') as json_file:
         request_routes = json.load(json_file)
 
     routesI  = []
@@ -67,6 +67,7 @@ def heuristic(routesI):
     pathData["lastPoints"] = [0]
 
     pathData = bestPath(0, pathData)
+    
     return pathData
 
 def coordsRoute(optRoute, routesI):
