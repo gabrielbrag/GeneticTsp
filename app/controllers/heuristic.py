@@ -1,7 +1,10 @@
 import json
+import os
 
+#Cria um objeto com as rotas e seus custos
 def routes():
-    with open('C:/Users/Gabriel/Documents/Programação/TCC/FlaskWebpage/BackupRequest.json') as json_file:
+    #Abre json com requisição do google maps
+    with open(os.getenv("ROOT_DIR") + 'BackupRequest.json') as json_file:
         request_routes = json.load(json_file)
 
     routesI  = []
@@ -11,7 +14,6 @@ def routes():
         pathCoords = []
         pathCoords = path["points"]
         pathCoords.append(path["end_coords"]) 
-        #print(len(pathCoords))
         dest_name = path['dest_name']
         edge = {'dest_node':path['path_dest'], 'dest_name':dest_name, 'edge_dis':path['totalDistance'], 'edge_time':path['travelTime'], 'edge_cost': pesoDec, 'route_points':pathCoords}
         found_node = False
@@ -26,6 +28,7 @@ def routes():
             routesI.append(new_routeI)
     return routesI
 
+#Algoritimo de busca heuristica (busca gulosa)
 def bestPath(currentPoint, pathData):
     lowerValue = 0
     isPassed = False
@@ -70,6 +73,7 @@ def heuristic(routesI):
     
     return pathData
 
+#Dado uma rota, retorna as coordenadas dela
 def coordsRoute(optRoute, routesI):
     coordsRoute = []
     currentNode = 0

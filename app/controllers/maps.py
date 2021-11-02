@@ -4,6 +4,7 @@ import json
 import requests
 import os
 
+#Calcula o custo de uma rota (tempo x distância)
 def CostRoute(request_routes, optRoute):
   current_node = 0
   next_node = optRoute[0]
@@ -22,6 +23,7 @@ def CostRoute(request_routes, optRoute):
   costs = {"totalDis":totalDis, "totalTime":totalTime, "totalCost":totalCost}
   return costs
 
+#Cria um mapa em html usando a biblioteca folium
 def CreateMap(coordsRoute, routesI):
   m = folium.Map(location=[float(coordsRoute[0][0]), float(coordsRoute[0][1])],
                zoom_start=11) #Criamos um objeto mapa da biblioteca Folium, será usado para exibição
@@ -44,6 +46,7 @@ def CreateMap(coordsRoute, routesI):
   m.save("C:/Users/Gabriel/Documents/Programação/TCC/FlaskWebpage/templates/map.html")
   return m
 
+#Dado uma lista de endereços, busca no google maps as rotas possíveis entre eles
 def gMapsRoutes(edges):
   request_routes = []
   for index1, end1 in enumerate(edges):

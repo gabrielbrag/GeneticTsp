@@ -1,13 +1,15 @@
 from numpy import loadtxt
-import env
+import os
 
+#Leitura de um arquivo com endereços
 def getAddressFile(fileName):
-    consts = env.const
+    consts = os.getenv.const
     lines = []
     if fileName:
-        with open(consts["ROOT_DIR"] + '\\' + fileName + '.dat', encoding="utf8") as file:
+        #Abre o arquivo
+        with open(os.getenv("ROOT_DIR") + '\\' + fileName + '.dat', encoding="utf8") as file:
             lines = file.readlines()
-            lines = [line.rstrip() for line in lines]
+            lines = [line.rstrip() for line in lines] #Realiza leitura
 
-    return lines
+    return lines #Retorna linhas lidas
 
