@@ -39,10 +39,10 @@ def progress():
     mutRate = int(request.form['mutation'])/100
     gens = request.form['gens']
     points = request.form.getlist('points[]')
-    
-    #request_routes = maps.gMapsRoutes(points) #Chama a API Gmaps
+    print("chegou aqui eeeeee")
+    request_routes = maps.gMapsRoutes(points) #Chama a API Gmaps
     #print(points)
-    request_routes = {}
+    #request_routes = {}
     routes = heuristic.routes() #Organiza os resultados
     pathData = heuristic.heuristic(routes) #Aplicando Heuristica
     genRoute = GA.train(pathData, int(gens), mutRate) #Aciona o algoritimo genético

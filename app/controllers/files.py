@@ -1,9 +1,8 @@
-from numpy import loadtxt
 import os
 
 #Leitura de um arquivo com endereços
 def getAddressFile(fileName):
-    consts = os.getenv.const
+    #consts = os.getenv.const
     lines = []
     if fileName:
         #Abre o arquivo

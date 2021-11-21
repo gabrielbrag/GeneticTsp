@@ -4,9 +4,9 @@ import os
 #Cria um objeto com as rotas e seus custos
 def routes():
     #Abre json com requisição do google maps
-    with open(os.getenv("ROOT_DIR") + 'BackupRequest.json') as json_file:
+    with open(os.getenv("ROOT_DIR") + '\BackupRequest.json') as json_file:
         request_routes = json.load(json_file)
-
+    print(request_routes)
     routesI  = []
     for path in request_routes:
         current_node = path["path_orig"]

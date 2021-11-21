@@ -58,6 +58,7 @@ def gMapsRoutes(edges):
           r = requests.get(req_str)
           #print(req_str)
           jsonDict = json.loads(r.text)
+          #print(jsonDict)
           jsonDict["routes"][0]["legs"]
           routes_dict = {}
           travelTime = jsonDict["routes"][0]["legs"][0]["duration"]["value"]
