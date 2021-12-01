@@ -181,9 +181,11 @@ def train(pathData, numGen, mutRate):
         genData["time"] = costs["totalTime"]
 
     if fitChanged: #Se melhor rota mudou, notifica cliente
+      print('BestGen ' +  str(genData["currentGen"]))
       r.post('http://localhost:5000/updMap', json=json.dumps(genData))
       fitChanged = False
 
   #Notifica conclusão do processo
+  print('====================================')
   r.post('http://localhost:5000/finish', data={"endGen":numGen})
   return bestSample

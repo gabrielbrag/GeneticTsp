@@ -6,7 +6,7 @@ def routes():
     #Abre json com requisição do google maps
     with open(os.getenv("ROOT_DIR") + '\BackupRequest.json') as json_file:
         request_routes = json.load(json_file)
-    print(request_routes)
+
     routesI  = []
     for path in request_routes:
         current_node = path["path_orig"]
@@ -15,17 +15,19 @@ def routes():
         pathCoords = path["points"]
         pathCoords.append(path["end_coords"]) 
         dest_name = path['dest_name']
-        edge = {'dest_node':path['path_dest'], 'dest_name':dest_name, 'edge_dis':path['totalDistance'], 'edge_time':path['travelTime'], 'edge_cost': pesoDec, 'route_points':pathCoords}
+        edge = {'dest_node':path['path_dest'], 'dest_name':dest_name, 'edge_dis':path['totalDistance'], 'edge_time':path['travelTime'], 'edge_cost': pesoDec,'route_points':pathCoords}
         found_node = False
         for routeIndex, routeI in enumerate(routesI): #Passando pela lista de rotas ideais
             if routeI['orig_node'] == current_node: #Se achar um item na lista cujo nó de origem é igual a origem atual, usa ele
                 routesI[routeIndex]['dest'].append(edge) #Coloca o destino
                 found_node = True
-        if not found_node: #Senão encontrar o nó origem atual (ponto) na lista de rotas ideias, cria ele e coloca um ponto de destino
+        if not found_node: #Senão encontrar o nó origem atual (ponto) na lista de rotas ideais, cria ele e coloca um ponto de destino
             orig_name = path['origin_name']
             new_routeI = {'orig_node':current_node, 'orig_name':orig_name, 'orig_coords':path['orig_coords'], 'dest':[]}
             new_routeI['dest'].append(edge)
             routesI.append(new_routeI)
+    with open((os.getenv('ROOT_DIR') + '\\' + 'rotas.json'), 'w') as outfile:
+        json.dump(routesI, outfile)
     return routesI
 
 #Algoritimo de busca heuristica (busca gulosa)
@@ -48,7 +50,6 @@ def bestPath(currentPoint, pathData):
                 pathData["currentPoint"] = value['dest_node']
 
         isPassed = False
-
     pathData["optRoute"].append(pathData["currentPoint"])
     
     pathData["lastPoints"].append(pathData["currentPoint"])
@@ -70,7 +71,6 @@ def heuristic(routesI):
     pathData["lastPoints"] = [0]
 
     pathData = bestPath(0, pathData)
-    
     return pathData
 
 #Dado uma rota, retorna as coordenadas dela

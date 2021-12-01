@@ -39,10 +39,7 @@ def progress():
     mutRate = int(request.form['mutation'])/100
     gens = request.form['gens']
     points = request.form.getlist('points[]')
-    print("chegou aqui eeeeee")
-    request_routes = maps.gMapsRoutes(points) #Chama a API Gmaps
-    #print(points)
-    #request_routes = {}
+    maps.gMapsRoutes(points) #Chama a API Gmaps
     routes = heuristic.routes() #Organiza os resultados
     pathData = heuristic.heuristic(routes) #Aplicando Heuristica
     genRoute = GA.train(pathData, int(gens), mutRate) #Aciona o algoritimo genético
@@ -69,4 +66,9 @@ def update():
 @app.route('/finish', methods=["POST"])
 def nxtGen():
     socketio.emit('finish', request.form["endGen"])
+    return '1'
+
+@app.route('/lote')
+def lote():
+    maps.gMapsLote()
     return '1'

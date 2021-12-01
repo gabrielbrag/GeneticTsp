@@ -2,7 +2,6 @@
 
 {% block content %}
     <div class="col-sm-3"> 
-
         <div class="card mt-3" style="margin-bottom: 10%;"> 
             <div class="card-body">
                 <h5 class="card-title">
@@ -85,42 +84,109 @@
             timer: 3000
         })
 
+        function swalError(errorStr){
+             Swal.fire({
+                title: 'Erro',
+                html: errorStr,
+                icon: 'error'
+            });           
+        }
+
         function CreateMaps(){
-            $("#spinner").removeAttr("hidden")
-            $("#cardResults").removeAttr('hidden')
-            $('#frameMap').attr("src", "");
+            var foundError = false
 
-            $("#listInit").html(defListInit)      
-            $("#listVals").html(defListVals)
-            $("#listGain").html(defListGain);
-            $("#listGen").html(defListGen);
-
-            tableData = $('#tableAddress').DataTable().rows().data()
-            initArr = [$('#inputInitial').val()]
-            tableArr = []
-            for (var i = 0; i < tableData.length; i++){
-                tableArr.push(tableData[i][0])
+            if (!$("#gen").val()){
+                swalError('Geração não pode estar vazia')
+                foundError = true
             }
-            endArr = []
-            endArr = initArr.concat(tableArr)
-            console.log(endArr)
-            $.ajax('/progress', {
-                type: 'post',
-                data:{
-                    gens:$("#gen").val(),
-                    mutation:$('#mutation').val(),
-                    points:endArr
-                },
-                dataType: 'html'
-            });
+
+            if (!$('#mutation').val()){
+                swalError('Mutação não pode estar vazia')
+                foundError = true
+            }
+
+            if (!$('#mutation').val()){
+                swalError('Mutação não pode estar vazia')
+                foundError = true
+            }
+
+            if (!$('#inputInitial').val()){
+                swalError('Endereço inicial não pode ser vazio')
+                foundError = true
+            }
+
+            if ($('#tableAddress').DataTable().rows().data().length < 1){
+                swalError('É necessário adicionar pelo menos um endereço a rota')
+                foundError = true 
+            }
+
+            if (!foundError){
+                Swal.fire({
+                    title: 'Calculando Trajeto',
+                    html: '<h5><span>Preparando tudo...</span></h5>',
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('span')
+                        timerInterval = setTimeout(() => {
+                        b.textContent = 'Configurando Requisições...'
+                        }, 10000)
+                        timerInterval = setTimeout(() => {
+                        b.textContent = 'Encontrando o sentido da vida...'
+                        }, 30000)
+                        timerInterval = setTimeout(() => {
+                        b.textContent = '42...'
+                        }, 35000)
+                        timerInterval = setTimeout(() => {
+                        b.textContent = 'Requisitando rotas ao Google Maps...'
+                        }, 40000)
+                    }
+                });   
+                
+                $("#spinner").removeAttr("hidden")
+                $("#cardResults").removeAttr('hidden')
+                $('#frameMap').attr("src", "");
+
+                $("#listInit").html(defListInit)      
+                $("#listVals").html(defListVals)
+                $("#listGain").html(defListGain);
+                $("#listGen").html(defListGen);
+
+                tableData = $('#tableAddress').DataTable().rows().data()
+                initArr = [$('#inputInitial').val()]
+                tableArr = []
+                for (var i = 0; i < tableData.length; i++){
+                    tableArr.push(tableData[i][0])
+                }
+                endArr = []
+                endArr = initArr.concat(tableArr)
+                $.ajax('/progress', {
+                    type: 'post',
+                    data:{
+                        gens:$("#gen").val(),
+                        mutation:$('#mutation').val(),
+                        points:endArr
+                    },
+                    dataType: 'html'
+                });
+            }
         }
 
         socket.on('initRoute', function(data){
             initData = JSON.parse(data)
             $("#listInit").html(defListInit + (initData.distance / 1000) + " KM, " + timeString(initData.time))      
+            Swal.close();
         });
             
         socket.on('finish', function(data){
+            Swal.fire({
+                title: 'Rota Concluída',
+                html: 'O cálculo de rota foi concluído',
+                icon: 'success',
+                showConfirmButton:false,
+                timer:2000
+            });
+            
             $("#spinner").attr("hidden", true)
             $("#listGen").html(defListGen + data);    
             $('#frameMap').attr("src", "map");
